@@ -10,7 +10,11 @@ const IngredientForm = React.memo(props => {
   // const inputState = useState({ title: '', amount: '' });  // THIS is way you can do input field but harder to read not recommended
 
 
-  const [inputState, setInputState] = useState({ title: '', amount: '' }) //Better way! Data on the left, set new data on the right
+  // const [inputState, setInputState] = useState({ title: '', amount: '' }) //Better way! Data on the left, set new data on the right
+
+  //  You can setup two useStates for your properties so your states are independent of one and another
+  const [enteredTitle, setEnteredTitle] = useState('');
+  const [enteredAmount, setEnteredAmount] = useState('');   // Recommend way manage your state independently unless you need it be changed together
 
   const submitHandler = event => {
     event.preventDefault();
@@ -25,13 +29,9 @@ const IngredientForm = React.memo(props => {
             <label htmlFor="title">Name</label>
             {/* on Change == event is the change event, target is the input field and value is the value in that field */}
             <input type="text" id="title"
-              value={inputState.title}   // Work with data
+              value={enteredTitle}   // Work with data
               onChange={event => {
-                const newTitle = event.target.value;
-                setInputState(prevInputState => ({  // Update our data
-                  title: newTitle,
-                  amount: prevInputState.amount
-                }))
+                setEnteredTitle(event.target.value);
               }
               } />
           </div>
@@ -39,14 +39,10 @@ const IngredientForm = React.memo(props => {
             <label htmlFor="amount">Amount</label>
             <input type="number" id="amount"
               // title at the very end of this line is making sure we dont loose that information when we are updating the amount
-              value={inputState.amount}
+              value={enteredAmount}
               // React will just drop the title and only send you back item with only the amount on it
               onChange={event => {
-                const newAmount = event.target.value;
-                setInputState(prevInputState => ({
-                  amount: newAmount,
-                  title: prevInputState.title
-                }))
+                setEnteredAmount(event.target.value);
               }
               } />
           </div>
