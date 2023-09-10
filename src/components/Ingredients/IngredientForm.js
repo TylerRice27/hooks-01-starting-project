@@ -7,7 +7,10 @@ const IngredientForm = React.memo(props => {
 
   // useState always returns two elements within an Array. The first is your current state snapshot
   // The second element is the updated state
-  const inputState = useState({ title: '', amount: '' });
+  // const inputState = useState({ title: '', amount: '' });  // THIS is way you can do input field but harder to read not recommended
+
+
+  const [inputState, setInputState] = useState({ title: '', amount: '' }) //Better way! Data on the left, set new data on the right
 
   const submitHandler = event => {
     event.preventDefault();
@@ -22,10 +25,10 @@ const IngredientForm = React.memo(props => {
             <label htmlFor="title">Name</label>
             {/* on Change == event is the change event, target is the input field and value is the value in that field */}
             <input type="text" id="title"
-              value={inputState[0].title}
+              value={inputState.title}   // Work with data
               onChange={event => {
                 const newTitle = event.target.value;
-                inputState[1](prevInputState => ({
+                setInputState(prevInputState => ({  // Update our data
                   title: newTitle,
                   amount: prevInputState.amount
                 }))
@@ -36,11 +39,11 @@ const IngredientForm = React.memo(props => {
             <label htmlFor="amount">Amount</label>
             <input type="number" id="amount"
               // title at the very end of this line is making sure we dont loose that information when we are updating the amount
-              value={inputState[0].amount}
+              value={inputState.amount}
               // React will just drop the title and only send you back item with only the amount on it
               onChange={event => {
                 const newAmount = event.target.value;
-                inputState[1](prevInputState => ({
+                setInputState(prevInputState => ({
                   amount: newAmount,
                   title: prevInputState.title
                 }))
