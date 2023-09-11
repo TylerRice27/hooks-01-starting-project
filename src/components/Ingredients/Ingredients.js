@@ -17,6 +17,12 @@ function Ingredients() {
       { id: Math.random().toString(), ...ingredient }]);
   }
 
+  const removeIngredientHandler = ingredientId => {
+    console.log(ingredientId, "ingredient id");
+    setUserIngredients(prevIngredients => prevIngredients.filter((ingredient) => ingredient.id !== ingredientId))
+
+  }
+
 
   return (
     <div className="App">
@@ -26,7 +32,7 @@ function Ingredients() {
         <Search />
         {/* This is mapping/ for looping over a all my ingredients. Below is basically my
         component with a V-for */}
-        <IngredientList ingredients={userIngredients} onRemoveItem={() => { }} />   {/* ingredients is my prop I am passing into the component */}
+        <IngredientList ingredients={userIngredients} onRemoveItem={removeIngredientHandler} />   {/* ingredients is my prop I am passing into the component */}
       </section>
     </div>
   );
